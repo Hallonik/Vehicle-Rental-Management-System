@@ -1,0 +1,186 @@
+<div class="vehicle-container">
+  <h2>Vehicles</h2>
+
+  <button mat-raised-button color="primary" (click)="toggleAddForm()">
+    {{ isAdding ? 'Cancel' : 'Add Vehicle' }}
+  </button>
+
+  <!-- Add Vehicle Form -->
+  <div *ngIf="isAdding" class="add-vehicle-form">
+    <mat-card class="vehicle-card">
+      <mat-card-title>Add Vehicle</mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="addVehicleForm" (ngSubmit)="submitAddVehicle()" class="vehicle-form">
+
+          <div class="form-grid">
+            <!-- Vehicle Type -->
+            <mat-form-field appearance="outline">
+              <mat-label>Type</mat-label>
+              <input matInput formControlName="vehicle_type" placeholder="Car / Bike / Hatchback / SUV">
+            </mat-form-field>
+
+            <!-- Vehicle Name -->
+            <mat-form-field appearance="outline">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="vehicle_name" aria-label="Vehicle Name">
+            </mat-form-field>
+
+            <!-- Image URL -->
+            <mat-form-field appearance="outline">
+              <mat-label>Image URL</mat-label>
+              <input matInput formControlName="image_Url" placeholder="assets/vehicle_image/car1.jpeg">
+            </mat-form-field>
+
+            <!-- Price per Hour -->
+            <mat-form-field appearance="outline">
+              <mat-label>Price per Hour</mat-label>
+              
+              <input matInput type="number" formControlName="vehicle_rate_per_hour" aria-label="Price per Hour">
+            </mat-form-field>
+
+            <!-- Late Fee per Hour -->
+            <mat-form-field appearance="outline">
+              <mat-label>Late Fee per Hour</mat-label>
+              
+              <input matInput type="number" formControlName="vehicle_hourly_rate_late_fee" aria-label="Late Fee">
+            </mat-form-field>
+
+            <!-- Seating Capacity -->
+            <mat-form-field appearance="outline">
+              <mat-label>Seating Capacity</mat-label>
+              <input matInput type="number" formControlName="seating_capacity" aria-label="Seating Capacity">
+            </mat-form-field>
+
+            <!-- Fuel Type -->
+            <mat-form-field appearance="outline">
+              <mat-label>Fuel Type</mat-label>
+              <input matInput formControlName="fuel_type" placeholder="Petrol / Diesel / Electric">
+            </mat-form-field>
+
+            <!-- Ratings -->
+            <mat-form-field appearance="outline">
+              <mat-label>Ratings</mat-label>
+              <input matInput type="number" formControlName="ratings" min="0" max="5" aria-label="Ratings">
+            </mat-form-field>
+
+            <!-- Rating Count -->
+            <mat-form-field appearance="outline">
+              <mat-label>Rating Count</mat-label>
+              <input matInput type="number" formControlName="ratingCount" aria-label="Rating Count">
+            </mat-form-field>
+          </div>
+
+          <!-- Submit -->
+          <div class="form-actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="addVehicleForm.invalid">
+              Save
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+
+  <!-- Vehicle List -->
+  <!-- Vehicle List -->
+  <table mat-table [dataSource]="vehicles" class="mat-elevation-z8 full-width-table">
+
+    <!-- Vehicle ID -->
+    <ng-container matColumnDef="vehicle_id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let v"> {{ v.vehicle_id }} </td>
+    </ng-container>
+
+    <!-- Vehicle Type -->
+    <ng-container matColumnDef="vehicle_type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell *matCellDef="let v"> {{ v.vehicle_type }} </td>
+    </ng-container>
+
+    <!-- Vehicle Name -->
+    <ng-container matColumnDef="vehicle_name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let v"> {{ v.vehicle_name }} </td>
+    </ng-container>
+
+    <!-- Image -->
+    <ng-container matColumnDef="image_Url">
+      <th mat-header-cell *matHeaderCellDef> Image </th>
+      <td mat-cell *matCellDef="let v">
+        <img [src]="v.image_Url" alt="{{ v.vehicle_name }}" width="80" height="50">
+      </td>
+    </ng-container>
+
+    <!-- Status -->
+    <ng-container matColumnDef="vehicle_status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let v"> {{ v.vehicle_status }} </td>
+    </ng-container>
+
+    <!-- Price per Hour -->
+    <ng-container matColumnDef="vehicle_rate_per_hour">
+      <th mat-header-cell *matHeaderCellDef> Price/hr </th>
+      <td mat-cell *matCellDef="let v"> ${{ v.vehicle_rate_per_hour  }} </td>
+    </ng-container>
+
+    <!-- Late Fee -->
+    <ng-container matColumnDef="vehicle_hourly_rate_late_fee">
+      <th mat-header-cell *matHeaderCellDef> Late Fee/hr </th>
+      <td mat-cell *matCellDef="let v"> ${{ v.vehicle_hourly_rate_late_fee  }} </td>
+    </ng-container>
+
+    <!-- Availability -->
+    <ng-container matColumnDef="vehicle_availability">
+      <th mat-header-cell *matHeaderCellDef> Available </th>
+      <td mat-cell *matCellDef="let v">
+        <mat-icon color="{{ v.vehicle_availability ? 'primary' : 'warn' }}">
+          {{ v.vehicle_availability ? 'check_circle' : 'cancel' }}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+    <!-- Seating Capacity -->
+    <ng-container matColumnDef="seating_capacity">
+      <th mat-header-cell *matHeaderCellDef> Seats </th>
+      <td mat-cell *matCellDef="let v"> {{ v.seating_capacity }} </td>
+    </ng-container>
+
+    <!-- Fuel Type -->
+    <ng-container matColumnDef="fuel_type">
+      <th mat-header-cell *matHeaderCellDef> Fuel </th>
+      <td mat-cell *matCellDef="let v"> {{ v.fuel_type }} </td>
+    </ng-container>
+
+    <!-- Ratings -->
+    <ng-container matColumnDef="ratings">
+      <th mat-header-cell *matHeaderCellDef> Ratings </th>
+      <td mat-cell *matCellDef="let v"> {{ v.ratings }} ★ </td>
+    </ng-container>
+
+    <!-- Rating Count -->
+    <ng-container matColumnDef="ratingCount">
+      <th mat-header-cell *matHeaderCellDef> Rating Count </th>
+      <td mat-cell *matCellDef="let v"> {{ v.ratingCount }} </td>
+    </ng-container>
+
+    <!-- Total (your custom field) -->
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef> Total </th>
+      <td mat-cell *matCellDef="let v"> {{ v.total }} </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let v" class="actions">
+        <button mat-icon-button color="warn" matTooltip="Delete" (click)="removeVehicle(v)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Table Header & Rows -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>

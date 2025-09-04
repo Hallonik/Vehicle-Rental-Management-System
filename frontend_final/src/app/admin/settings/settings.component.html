@@ -1,0 +1,59 @@
+<!-- src/app/admin/settings/settings.component.html -->
+<div class="settings-wrap">
+  <div class="settings-form">
+    <h2>System Configuration</h2>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <label>
+        Default rental duration (days)
+        <input type="number" formControlName="defaultRentalDays" min="1"/>
+      </label>
+      <div class="error" *ngIf="form.get('defaultRentalDays')?.invalid && form.get('defaultRentalDays')?.touched">
+        Must be at least 1 day.
+      </div>
+
+      <label>
+        Base price / day (₹)
+        <input type="number" formControlName="basePricePerDay" min="0"/>
+      </label>
+
+      <label>
+        Late fee / day (₹)
+        <input type="number" formControlName="lateFeePerDay" min="0"/>
+      </label>
+
+      <label class="checkbox-line">
+        <input type="checkbox" formControlName="autoApproveBookings"/>
+        Auto-approve bookings
+      </label>
+
+      <label>
+        Cancellation window (hours)
+        <input type="number" formControlName="cancellationWindowHours" min="0"/>
+      </label>
+
+      <div class="actions">
+        <button type="submit" [disabled]="form.invalid || saving">Save</button>
+        <button type="button" (click)="resetToDefaults()">Reset Defaults</button>
+      </div>
+
+      <div class="message" *ngIf="message">{{ message }}</div>
+    </form>
+  </div>
+
+  <div class="settings-preview">
+    <h3>Current Settings Preview</h3>
+
+    <div class="card">
+      <div class="row"><strong>Default rental</strong><span>{{ currentSettings?.defaultRentalDays }} days</span></div>
+      <div class="row"><strong>Base price</strong><span>₹ {{ currentSettings?.basePricePerDay }}</span></div>
+      <div class="row"><strong>Late fee</strong><span>₹ {{ currentSettings?.lateFeePerDay }} / day</span></div>
+      <div class="row"><strong>Auto-approve</strong><span>{{ currentSettings?.autoApproveBookings ? 'Yes' : 'No' }}</span></div>
+      <div class="row"><strong>Free cancellation</strong><span>{{ currentSettings?.cancellationWindowHours }} hours before</span></div>
+    </div>
+
+    <div class="help">
+      Tip: These values are stored in browser localStorage (mock). Replace the service with HttpClient for real backend.
+    </div>
+  </div>
+</div>

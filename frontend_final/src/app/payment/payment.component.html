@@ -1,0 +1,79 @@
+<h2>Payment Form</h2>
+<div style="display: flex; justify-content: center; align-items: center;">
+  <p style="margin-bottom: 36px; text-align: center;">
+    Complete your purchase by entering your payment details below.
+  </p>
+</div>
+
+<form #paymentForm="ngForm" (ngSubmit)="submitPayment()">
+
+  <!-- Name on Card -->
+  <div class="form-group">
+    <label for="name">Name on Card</label>
+    <input id="name" name="name" [(ngModel)]="name" placeholder="Jane Smith" required />
+  </div>
+
+  <!-- User ID -->
+  <div class="form-group">
+    <label for="userId">User ID</label>
+    <input type="text" id="userId" name="userId" [(ngModel)]="userId" readonly />
+  </div>
+
+  <!-- Email -->
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input id="email" name="email" type="email" [(ngModel)]="email" placeholder="jane.smith@example.com" required />
+  </div>
+
+  <!-- Amount -->
+  <div class="form-group">
+    <label for="amount">Amount (USD)</label>
+    <input id="amount" name="amount" type="number" [(ngModel)]="amount" placeholder="20.00" min="1" step="0.01"
+      readonly />
+  </div>
+
+  <!-- Payment Mode -->
+  <div class="form-group">
+    <label for="paymode">Payment Mode <span style="color:red">*</span></label>
+    <select id="paymode" name="paymode" [(ngModel)]="paymentMode" (change)="setPaymentMode(paymentMode)" required>
+      <option value="">Select Mode</option>
+      <option value="card">Card</option>
+      <option value="upi">UPI</option>
+      <option value="netbanking">Net Banking</option>
+    </select>
+    <div *ngIf="!paymentMode && paymentForm.submitted" style="color:red;">
+      Please select a payment mode.
+    </div>
+  </div>
+
+  <!-- Stripe Card Element -->
+  <div class="form-group card-input-group " *ngIf="paymentMode === 'card'">
+    <label>Credit or Debit Card</label>
+    <div #cardContainer></div>
+    <div class="card-errors" *ngIf="cardErrors">{{ cardErrors }}</div>
+  </div>
+
+  <!-- Payment For -->
+  <div class="form-group">
+    <label for="paymentFor">Payment For</label>
+    <input type="text" id="paymentFor" name="paymentFor" [(ngModel)]="paymentFor" readonly />
+  </div>
+
+  <!-- Remark -->
+  <div class="form-group">
+    <label for="remark">Remark</label>
+    <textarea id="remark" name="remark" [(ngModel)]="remark" placeholder="Optional..."></textarea>
+  </div>
+
+  <!-- Buttons -->
+  <div style="display:flex; gap: 10px; justify-content:center; margin-top:20px;">
+    <button type="submit" [disabled]="submitting">{{ buttonLabel }}</button>
+    <button type="button" (click)="cancelPayment()" class="cancel-btn">Cancel</button>
+  </div>
+</form>
+
+<!-- Success Message -->
+<div class="success-message" *ngIf="success">
+  <h3>Payment Successful!</h3>
+  <p>Your payment has been processed successfully. You will receive a confirmation email shortly.</p>
+</div>

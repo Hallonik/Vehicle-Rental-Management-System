@@ -1,0 +1,134 @@
+<div class="center-wrapper">
+  <div class="container" id="container">
+
+    <!-- Sign Up Form -->
+    <div class="form-container sign-up">
+     
+      <form #signUpForm="ngForm" >
+
+        <h1>Create Account</h1>
+        <span>or use your email for registration</span>
+
+        <select class="select-role" #roleSelectsignup name="role" aria-label="Role"
+          (change)="onRoleChange(roleSelectsignup.value, 'signup')">
+          <option value="customer">Customer</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <input #name="ngModel" [(ngModel)]="nameValue" name="name" type="text" placeholder="Name" required />
+
+
+
+        <input #mobileNumber="ngModel" [(ngModel)]="mobileNumberValue" name="mobileNumber" type="tel"
+          placeholder="Phone Number" />
+
+
+          <input #userName="ngModel" [(ngModel)]="userNameValue" name="userName" type="text" placeholder="UserName"
+          required />
+
+
+        <input #password="ngModel" [(ngModel)]="passwordValue" name="password" type="password" placeholder="Password"
+          required />
+
+
+
+        <input #email="ngModel" [(ngModel)]="emailValue" name="email" type="email" placeholder="Email" required email />
+        <!-- Validation message -->
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" style="color: red; font-size: 0.8rem;">
+          <div *ngIf="email.errors?.['required']">Email is required.</div>
+          <div *ngIf="email.errors?.['email']">Please enter a valid email.</div>
+        </div>
+
+        <!-- OTP Section -->
+        <div *ngIf="!otpVerified">
+          <button type="button" (click)="onOtpButtonClick()">
+            {{ otpSent ? 'Verify OTP' : 'Send OTP' }}
+          </button>
+
+          <!-- OTP Input -->
+          <input *ngIf="otpSent && !otpVerified" [(ngModel)]="enteredOtp" name="otp" type="text"
+            placeholder="Enter OTP" />
+        </div>
+
+        <!-- OTP Verified Message -->
+        <div *ngIf="otpVerified" style="color: green; font-size: 0.9rem; margin-top: 5px;">
+          ✅ OTP Verified
+        </div>
+
+
+
+        <button type="submit" (click)="onSignUpClick()" [disabled]="!otpVerified">Sign Up</button>
+
+        <!-- User Registered Message -->
+        <div *ngIf="registrationSuccess" style="color: blue; font-size: 0.9rem; margin-top: 5px;">
+          🎉 User Registered successfully
+        </div>
+
+
+
+
+
+
+      </form>
+
+    </div>
+
+    <!-- Sign In Form -->
+    <div class="form-container sign-in">
+      <form (submit)="onSignIn(passwordInput.value,signInEmail.value, roleSelect.value,signInUserName.value); $event.preventDefault()">
+        <h1>LOGIN</h1>
+        <span>or use your email password</span>
+
+        <select #roleSelect class="select" aria-label="Select Role" (change)="onRoleChange(roleSelect.value, 'login')">
+          <option value="customer">Customer</option>
+          <option value="admin">Admin</option>
+        </select>
+
+
+
+         <input #signInUserName type="email" placeholder="UserName" />
+
+
+        <input #signInEmail type="email" placeholder="Email" />
+
+        <input #passwordInput type="password" placeholder="Password" />
+
+
+
+        <button type="button" (click)="goToForgotPassword()">Forget Your Password?</button>
+        <button type="submit" (click)="onSignIn(passwordInput.value,signInEmail.value, roleSelect.value,signInUserName.value)">
+          Sign In
+        </button>
+
+        <!-- Success Message -->
+        <div *ngIf="loginSuccess" style="color: green; font-size: 0.9rem; margin-top: 5px;">
+          ✅ Login Successful
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="loginError" style="color: red; font-size: 0.9rem; margin-top: 5px;">
+          ❌ Invalid credentials. Please try again.
+        </div>
+      </form>
+    </div>
+
+    <!-- Toggle Panel -->
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h1>VRMS</h1>
+          <h2>Welcomes Back!</h2>
+          <p>Register with your personal details to be a customer</p>
+          <button class="hidden" id="login">Sign In</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>VRMS</h1>
+          <h2>Welcome, Friends!</h2>
+          <p>Drive Easy with VRMS</p>
+          <button class="hidden" id="register">Sign Up</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

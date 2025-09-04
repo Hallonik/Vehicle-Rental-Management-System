@@ -1,0 +1,120 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f5f7fa;
+}
+
+body {
+  display: grid;
+  place-items: center; /* centers both vertically and horizontally */
+}
+
+form {
+  background: #fff;
+  padding: 20px 22px;
+  border-radius: 12px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+  width: 320px;  /* compact width */
+  max-width: 90%;
+      margin: auto;
+}
+
+h2, h3 {
+  display: flex;
+  justify-content: center;
+  color: #1e88e5;
+  font-weight: 500;
+}
+
+.form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #555;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #fafafa;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #1e88e5;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(30,136,229,0.25);
+}
+
+#card-element {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+}
+
+#card-errors {
+  color: #fa755a;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+button {
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 0;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 95%; /* slightly wider than inputs */
+  margin-top: 12px;
+  text-align: center;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(21,101,192,0.35);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.success-message {
+  display: none;
+  text-align: center;
+  background: #dbffdb;
+  border: 1px solid #95cc95;
+  padding: 12px;
+  border-radius: 6px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 36px;
+}
+
+.card-input-group {
+  background-color: #fafafa;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+

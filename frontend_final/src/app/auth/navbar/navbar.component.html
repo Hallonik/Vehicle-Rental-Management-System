@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <img src="./../../assets/logo.png" alt="VRMS Logo" class="logo">
+    <span>VRMS</span>
+  </div>
+
+  <ul class="nav-menu">
+    <li (click)="setActiveMenu('Home')" [class.active]="activeMenu==='Home'">Home</li>
+    <li (click)="setActiveMenu('myBooking')" [class.active]="activeMenu==='myBooking'">My Bookings</li>
+  </ul>
+
+  <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="Search vehicles...">
+</nav>

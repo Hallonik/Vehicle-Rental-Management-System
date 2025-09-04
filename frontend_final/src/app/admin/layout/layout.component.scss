@@ -1,0 +1,30 @@
+/* src/app/admin/layout/layout.component.scss */
+.sidenav-container { height: 100vh; }
+.sidenav { width: 240px; padding-top: 12px; }
+.logo { font-weight: 700; padding: 12px; font-size: 18px; }
+
+.spacer { flex: 1 1 auto; }
+.main-area { padding: 16px; background: #f5f5f5; min-height: calc(100vh - 64px); }
+
+.topbar { display: flex; align-items: center; background: #fff; padding: 40px 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); height: 12%;  }
+
+.search{
+   
+    width: 40%;
+}
+       
+
+
+mat-form-field{
+   
+    width: 100%;
+   
+}
+
+.bigger-icon {
+  font-size: 50px; /* Make it bigger */
+  width: 50px;     /* Keep the icon container the same size */
+  height: 50px;
+  line-height: 50px; /* Vertically center the icon glyph */
+}
+

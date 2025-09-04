@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<div mat-dialog-content [formGroup]="form" class="dialog-body">
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name" aria-label="User Name">
+    <mat-error *ngIf="form.controls['name'].hasError('required')">Name is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email"  aria-label="User Email">
+    <mat-error *ngIf="form.controls['email'].hasError('email')">Invalid email</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Phone</mat-label>
+    <input matInput formControlName="phone"  aria-label="User Phone Number">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Role</mat-label>
+    <mat-select formControlName="role">
+      <mat-option *ngFor="let r of roles" [value]="r">{{ r }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-slide-toggle formControlName="active">Active</mat-slide-toggle>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button color="primary" mat-raised-button (click)="submit()" [disabled]="saving || form.invalid">
+    {{ saving ? 'Saving…' : 'Save' }}
+  </button>
+</div>

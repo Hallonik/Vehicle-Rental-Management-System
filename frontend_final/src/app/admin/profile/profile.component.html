@@ -1,0 +1,104 @@
+<div class="profile-container">
+  <mat-card class="profile-card" *ngIf="!loading; else loadingTpl">
+    <div class="profile-header">
+      <div class="avatar-wrap">
+        <!-- Show current image -->
+        <img *ngIf="form.get('imageUrl')?.value" [src]="form.get('imageUrl')?.value" alt="avatar" class="avatar" />
+
+        <!-- Fallback with initials if no image -->
+        <!-- Avatar fallback initials -->
+        <div *ngIf="!form.get('imageUrl')?.value" class="avatar fallback">
+          {{ initials(form.get('fullName')?.value) }}
+        </div>
+
+        <!-- Show file picker only in edit mode -->
+        <ng-container *ngIf="editMode">
+          <input type="file" id="avatarInput" (change)="onFileSelected($event)" accept="image/*" hidden>
+          <label for="avatarInput" class="upload-btn">
+            <mat-icon>photo_camera</mat-icon> Change Image
+          </label>
+        </ng-container>
+      </div>
+
+      <div class="header-right">
+        <h2 class="profile-name">{{ form.get('fullName')?.value }}</h2>
+        <div class="profile-userName">{{ form.get('userName')?.value }}</div>
+        <div class="profile-email">{{ form.get('email')?.value }}</div>
+        <div class="profile-actions">
+          <button mat-stroked-button color="primary" *ngIf="!editMode" (click)="enterEdit()">
+            <mat-icon>edit</mat-icon> Update
+          </button>
+
+
+
+          <div *ngIf="editMode" class="editing-actions">
+            <!-- Show file picker only in edit mode -->
+
+            <button mat-flat-button color="primary" (click)="save()" [disabled]="saving || form.invalid">
+              <mat-icon *ngIf="!saving">save</mat-icon>
+              <mat-progress-spinner *ngIf="saving" mode="indeterminate" diameter="18"></mat-progress-spinner>
+              Save
+            </button>
+            <button mat-button (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <form [formGroup]="form" class="profile-form" (ngSubmit)="save()">
+      <div class="form-row">
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Full name</mat-label>
+          <input matInput formControlName="fullName" aria-label="Full Name of Admin" />
+          <mat-error *ngIf="form.get('fullName')?.hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" readonly aria-label="Admins Email" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Phone</mat-label>
+          <input matInput formControlName="phone" aria-label="Admins Phone Number" />
+          <mat-hint>10-digit mobile number</mat-hint>
+          <mat-error *ngIf="form.get('phone')?.hasError('pattern')">Invalid phone number</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Driving License</mat-label>
+          <input matInput formControlName="drivingLicenseNumber" aria-label="Admins DL" />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Payment Method</mat-label>
+          <input matInput formControlName="paymentMethod" aria-label="Admins Pay Method" />
+          <mat-hint>e.g. CARD •••• 4242 or UPI</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <!-- buttons shown only in editMode -->
+      <div class="form-actions" *ngIf="editMode">
+        <button mat-flat-button color="primary" (click)="save()" [disabled]="saving || form.invalid">
+          Save
+        </button>
+        <button mat-button (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </mat-card>
+
+  <ng-template #loadingTpl>
+    <div class="loading-wrap">
+      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    </div>
+  </ng-template>
+
+</div>

@@ -1,0 +1,34 @@
+<div class="stats-row">
+  <mat-card class="stat-card">Total Vehicles <div class="big">{{stats.totalVehicles}}</div></mat-card>
+  <mat-card class="stat-card">Available <div class="big">{{stats.availableVehicles}}</div></mat-card>
+  <mat-card class="stat-card">Active Bookings <div class="big">{{stats.activeBookings}}</div></mat-card>
+  <mat-card class="stat-card">Total Users <div class="big">{{stats.totalUsers}}</div></mat-card>
+  <mat-card class="stat-card">Revenue This Month <div class="big">${{stats.totalRevenue}}</div></mat-card>
+</div>
+
+<div class="grid">
+  <mat-card class="card-large">
+    <h3>Revenue Summary</h3>
+    <canvas baseChart
+            [data]="revenueChartData"
+            [options]="revenueChartOptions"
+            [type]="'bar'">
+    </canvas>
+  </mat-card>
+
+  <mat-card class="card-wide">
+    <h3>Vehicle Type Distribution</h3>
+    <canvas baseChart
+            [data]="{ labels: vehicleTypeLabels, datasets: [{ data: vehicleTypeCounts }] }"
+            [type]="'doughnut'">
+    </canvas>
+  </mat-card>
+
+  <mat-card class="overview">
+    <h3>Booking Overview</h3>
+    <canvas baseChart
+            [data]="bookingChartData"
+            [type]="'bar'">
+    </canvas>
+  </mat-card>
+</div>

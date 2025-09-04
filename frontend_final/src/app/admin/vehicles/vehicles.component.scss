@@ -1,0 +1,66 @@
+.vehicle-container {
+  padding: 20px;
+}
+
+.add-vehicle-form {
+  margin: 15px 0;
+  display: flex;
+  flex-direction: column; /* stack card properly */
+  gap: 10px;
+}
+
+.vehicle-card {
+  width: 100%;        /* ✅ full width */
+  margin: 10px 0;
+  padding: 20px;      /* more padding */
+  box-sizing: border-box;
+}
+
+.vehicle-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* ✅ responsive grid */
+  gap: 25px;
+  width: 100%;
+}
+
+mat-form-field {
+  width: 100%;        /* take full width of grid cell */
+  max-width: 350px;   /* ✅ fixed width */
+  height: 80px;       /* ✅ fixed height */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+mat-form-field input {
+  height: 40px;       /* ✅ bigger input box */
+  font-size: 16px;
+  padding: 4px;
+}
+
+.form-actions {
+  margin-top: 30px;
+  text-align: right;
+}
+
+button {
+  min-width: 150px;
+  height: 50px;       /* ✅ fixed button height */
+  font-size: 16px;
+  border-radius: 6px;
+  
+}
+
+.form-actions button{
+  background-color: rgb(3, 120, 81);
+  color: white;
+ font-weight: bold;
+ padding: 10px;
+}

@@ -1,0 +1,44 @@
+.revenue-report {
+  display: grid;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chart-card,
+.table-card {
+  padding: 12px;
+}
+
+.section-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.donut-wrapper {
+  max-width: 280px;   // ✅ smaller chart size
+  margin: 0 auto;     // center it
+}
+
+table {
+  width: 100%;
+}
+
+.no-data {
+  text-align: center;
+  padding: 16px;
+  color: #666;
+}
+
+.loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}

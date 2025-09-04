@@ -1,0 +1,144 @@
+<div class="allbookings">
+
+  <!-- Show message if no bookings -->
+  <div *ngIf="!hasBookings" class="no-bookings">
+    <p>No Bookings Present !</p>
+  </div>
+
+
+  <main class="cards-wrap" *ngIf="hasBookings">
+    <article class="vehicle-card" *ngFor="let booking of bookings">
+      <div class="vehicle-media">
+        <img [src]="booking.image_Url" [alt]="booking.vehicle_name" class="vehicle-img" aria-label="VehicleImage" />
+        <span class="badge" [ngClass]="{
+  'active-badge': booking.refund_status === null || booking.refund_status === 'ACTIVE',
+  'completed-badge': booking.refund_status !== null && booking.refund_status !== 'ACTIVE'
+}">
+          {{ booking.refund_status === null || booking.refund_status === 'ACTIVE' ? 'Active' : 'Completed' }}
+        </span>
+      </div>
+
+      <div class="vehicle-body">
+        <div class="vehicle-head">
+          <h3 class="vehicle-title">{{ booking.vehicle_name }}</h3>
+          <div class="price">
+            <div class="amount">{{ booking.booking_price | currency:'USD':'symbol':'1.0-1' }}</div>
+            <div class="per">/🕒{{ booking.booking_hours }} hr(s)</div>
+          </div>
+        </div>
+
+        <ul class="vehicle-features">
+          <li><span class="icon">🛢</span> {{ booking.vehicle_type }}</li>
+          <li>
+            <span class="icon">⭐</span> {{ booking.ratings }}
+            <span class="rated-by">({{ booking.ratingCount || 0 }})</span>
+          </li>
+        </ul>
+
+        <div class="vehicle-footer">
+          <button class="btn btn-outline" (click)="openInvoice(booking)">
+            Download Invoice
+          </button>
+          <button *ngIf="booking.refund_status === null || booking.refund_status === 'ACTIVE'" class="btn btn-danger"
+            (click)="cancelBooking(booking)">
+            Cancel
+          </button>
+
+          <!-- Show Rebook only if Completed -->
+          <!-- <button *ngIf="booking.refund_status !== null && booking.refund_status !== 'ACTIVE'" class="btn btn-primary"
+            (click)="rebookBooking(booking)">
+            Rebook
+          </button> -->
+
+          <!-- Booking Modal -->
+          <app-booking-modal [vehicle]="selectedVehicle" [show]="showBookingModal" (close)="handleModalClose()"
+            (pay)="handlePay($event)">
+          </app-booking-modal>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- Invoice Modal -->
+  <div class="overlay" *ngIf="selectedBooking">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>
+          {{ isCancelledInvoice ? 'Booking Cancelled Invoice' : 'Vehicle Rental Invoice' }}
+        </h2>
+        <button class="close-btn" (click)="closeInvoice()">✖</button>
+      </div>
+
+      <div class="modal-body" id="print-section">
+        <div class="invoice-container">
+
+          <!-- 🚩 CANCELLED WATERMARK -->
+          <div *ngIf="isCancelledInvoice" class="cancelled-watermark">
+            CANCELLED
+          </div>
+
+          <div class="invoice-address">
+            <div>
+              <h4>Bill To:</h4>
+              <p>{{ selectedBooking.name }}</p>
+              <p>{{ selectedBooking.email }}</p>
+              <p>MobNo : {{ selectedBooking.phoneNumber }}</p>
+            </div>
+            <div>
+              <h4>From:</h4>
+              <p>Vehicle Rentals Pvt Ltd</p>
+              <p>VRMS Rentals</p>
+              <p>support&#64;vehiclerental.com</p>
+            </div>
+          </div>
+
+          <!-- Dynamic Date -->
+          <p class="invoice-date">
+            Date:
+            {{
+            isCancelledInvoice
+            ? (today | date: 'dd MMMM yyyy')
+            : (selectedBooking.booking_date | date: 'dd MMMM yyyy')
+            }}
+          </p>
+
+          <!-- Dynamic Table -->
+          <table class="invoice-table">
+            <thead>
+              <tr>
+                <th>Vehicle</th>
+                <th>Type</th>
+                <th>Hours</th>
+                <th>
+                  {{ isCancelledInvoice ? 'Refund Amount' : 'Total' }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ selectedBooking.vehicle_name }}</td>
+                <td>{{ selectedBooking.vehicle_type }}</td>
+                <td>{{ selectedBooking.booking_hours }}</td>
+                <td>${{ selectedBooking.booking_price }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="invoice-footer">
+            <p>
+              {{ isCancelledInvoice ? 'Refund has been initiated.' : 'Thank you for choosing Vehicle Rentals!' }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn" (click)="closeInvoice()">Close</button>
+        <button class="btn" (click)="downloadInvoice()">Download</button>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

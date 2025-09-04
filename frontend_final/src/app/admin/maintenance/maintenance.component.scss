@@ -1,0 +1,58 @@
+.maintenance-container {
+  padding: 1rem;
+
+  mat-card {
+    padding: 1rem;
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  table {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .total {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    text-align: right;
+  }
+}
+
+.add-form-card {
+  margin: 20px auto;
+  padding: 20px;
+  padding-left: 60px;
+  max-width: 100%;
+  gap: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+ 
+}
+
+.add-form mat-form-field {
+  display: block;
+  width: 80%;
+  margin-bottom: 15px;
+  padding-left: 10%;
+}
+
+.add-btn{
+    margin-top: 10px;
+    width: 100%;
+    max-width: 200px;
+    align-self: center;
+
+    margin-left: 40%;
+}
+
+
+
+.filter-form mat-form-field {
+    
+    margin: 10px;
+}

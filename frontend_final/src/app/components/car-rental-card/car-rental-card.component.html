@@ -1,0 +1,38 @@
+<main class="cards-wrap">
+  <article class="vehicle-card">
+  <div class="vehicle-media">
+    <img
+   [src]="imageUrl || 'assets/logo.png'" [alt]="carName" class="vehicle-img" />
+
+ 
+
+    <span class="badge" *ngIf="badgeText">{{ badgeText }}</span>
+  </div>
+  <div class="vehicle-body">
+    <div class="vehicle-head">
+      <h3 class="vehicle-title">{{ carName }}</h3>
+      <div class="price">
+        <div class="amount">${{ price | number }}</div>
+        <div class="per">{{ priceUnit }}</div>
+      </div>
+    </div>
+
+    <ul class="vehicle-features">
+  <li *ngFor="let feature of features">
+    <span class="icon">{{ feature.icon }}</span> {{ feature.text }}
+  </li>
+</ul>
+
+    <div class="vehicle-footer">
+      <div class="rating">
+        ★ {{ ratings}} <span class="rated-by">({{ ratingCount }})</span>
+      </div>
+      <div class="actions">
+        <button class="btn btn-outline" style="margin-left: 50px;" (click)="openDetails()">View</button>
+        <button class="btn btn-primary" (click)="onBookClick()">Book</button>
+      </div>
+    </div>
+  </div>
+</article>
+
+</main>

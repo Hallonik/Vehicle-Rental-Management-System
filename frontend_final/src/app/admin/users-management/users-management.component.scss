@@ -1,0 +1,29 @@
+.page { padding: 16px; }
+.header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+}
+.spacer { flex: 1; }
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 200px 200px auto;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.table-wrap { overflow: auto; }
+
+.loading { display: flex; align-items: center; justify-content: center; padding: 48px; }
+.empty td { padding: 24px; text-align: center; color: #666; }
+
+actions {
+  display: flex;
+  gap: 4px;
+  align-items: center; /* vertically center buttons */
+  justify-content: center; /* optional: center horizontally in cell */
+}
+.actions button.mat-icon-button {
+  padding: 4px; /* optional: smaller buttons */
+}
+.actions mat-icon {
+  font-size: 20px; /* normalize icon size */
+  vertical-align: middle;
+}

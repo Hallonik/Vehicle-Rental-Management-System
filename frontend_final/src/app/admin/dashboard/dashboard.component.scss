@@ -1,0 +1,136 @@
+/* ---- Stats Row ---- */
+.stats-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap; /* allow wrapping on smaller screens */
+}
+
+.stat-card {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px;
+  text-align: center;
+}
+
+.big {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+/* ---- Grid Layout ---- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr; /* single column full width */
+  gap: 20px;
+  padding: 10px;
+  max-width: 100%;
+}
+
+/* Revenue Summary spans full width */
+.card-large {
+  grid-column: span 1;
+  padding: 20px;
+  margin: 10px 0;
+  height: 600px;
+}
+
+/* Booking Overview (full width) */
+.overview {
+  grid-column: span 1;
+  padding: 20px;
+  height: 600px;
+}
+
+/* Vehicle Type Distribution (full width, reduced height) */
+.card-wide {
+  grid-column: span 1;
+  padding: 20px;
+  height: 500px; /* reduced height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-wide canvas {
+  max-width: 90%;
+  max-height: 85%;
+}
+
+/* Optional sections */
+.typeBooked {
+  grid-column: span 1;
+  padding: 20px;
+}
+
+.add-vehicle {
+  grid-column: span 1; /* full width */
+  padding: 20px;
+}
+
+.reports-spot {
+  grid-column: span 1;
+  padding: 10%;
+}
+
+/* ---- Material Card Overrides ---- */
+mat-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+mat-card canvas {
+  width: 100% !important;
+  height: 80% !important;
+}
+
+/* ---- Utility ---- */
+.full {
+  width: 100%;
+}
+
+.type-bar {
+  margin: 8px 0;
+}
+
+.bar {
+  height: 12px;
+  background: #eee;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: #3f51b5;
+}
+
+.status {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.legend {
+  margin-left: 8px;
+}
+
+/* ---- Responsive Fix ---- */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr; /* keep single column on mobile too */
+  }
+
+  .card-large,
+  .overview,
+  .card-wide,
+  .add-vehicle {
+    grid-column: span 1 !important;
+    height: auto;
+  }
+
+  .card-wide {
+    display: block;
+  }
+}

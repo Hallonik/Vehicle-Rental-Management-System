@@ -1,0 +1,248 @@
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <img src="./../../assets/logo.png" alt="Company Logo" class="logo" />
+    <span class="company-name">VRMS</span>
+  </div>
+
+  <div class="navbar-center">
+    <ul class="nav-menu">
+      <li (click)="setActiveMenu('Home')" [class.active]="activeMenu === 'Home'">Home</li>
+      <li (click)="setActiveMenu('details')" [class.active]="activeMenu === 'details'">My Bookings</li>
+      <li (click)="setActiveMenu('feedback')" [class.active]="activeMenu === 'feedback'">Feedback</li>
+      <li (click)="setActiveMenu('about')" [class.active]="activeMenu === 'about'">About Us</li>
+
+      <!-- 👤 Profile Icon -->
+      <li (click)="setActiveMenu('profile')" [class.active]="activeMenu === 'profile'">
+        <i class="fa-solid fa-user-circle"></i> Profile
+      </li>
+
+
+    </ul>
+  </div>
+
+  <div class="navbar-right">
+    <input type="text" placeholder="Search vehicles..." [(ngModel)]="searchTerm" (input)="onSearch()"
+      class="search-input" />
+    <div class="user-dropdown">
+      <i class="fa-solid fa-user"></i>
+      <div class="dropdown-content">
+        <a (click)="logout()">Logout</a>
+      </div>
+    </div>
+
+  </div>
+
+</nav>
+
+<div class="page-container">
+  <!-- FILTER SECTION -->
+  <aside *ngIf="activeMenu === 'Home'" class="filter-section">
+    <h3>Filters</h3>
+
+    <div class="filter-group">
+      <label for="type-select">Type:</label>
+      <select id="type-select" [(ngModel)]="filters.type" (change)="applyFilters()">
+        <option value="">All</option>
+        <option *ngFor="let t of vehicleTypes" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="price-range">Price Range:</label>
+      <input id="price-range" type="range" min="0" max="5000" step="10" [(ngModel)]="filters.priceMax"
+        (change)="applyFilters()" />
+      <span>Up to ${{ filters.priceMax }}</span>
+    </div>
+    <!-- 🚗 Fuel Type Filter -->
+    <div class="filter-group">
+      <label for="fuel-select">Fuel:</label>
+      <select id="fuel-select" [(ngModel)]="filters.fuel" (change)="applyFilters()">
+        <option value="">All</option>
+        <option *ngFor="let f of fuelTypes" [value]="f">{{ f }}</option>
+      </select>
+    </div>
+
+    <button type="button" class="clear-btn" (click)="clearFilters()">Clear Filters</button>
+  </aside>
+
+  <!-- VEHICLE LISTING -->
+  <section *ngIf="activeMenu === 'Home'" class="vehicle-listing">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));">
+      <app-car-rental-card *ngFor="let v of filteredVehicles" [carName]="v.name" [price]="v.price" priceUnit="/ hour"
+        [imageUrl]="v.imageUrl || ''" [features]="[
+    { icon: '👥', text: v.people || 'N/A' },
+    { icon: '⛽', text: v.fuel || 'N/A' },
+  ]" [ratings]="v.ratings || 'N/A'" [ratingCount]="v.ratingCount || 0"
+        (book)="openBookingModal(v)"></app-car-rental-card>
+      <app-booking-modal [vehicle]="selectedVehicle" [show]="showBooking" (close)="closeBooking()"
+        (pay)="handlePayment($event)">
+      </app-booking-modal>
+
+    </div>
+  </section>
+
+  <!-- FEEDBACK FORM -->
+  <section *ngIf="activeMenu === 'feedback'" class="feedback-section">
+    <div class="feedback-container">
+      <h2 class="feedback-title">We Value Your Feedback</h2>
+      <p class="feedback-subtitle">Help us improve your experience by sharing your thoughts below.</p>
+
+      <form #feedbackForm="ngForm" (ngSubmit)="submitFeedback()">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" name="name" [(ngModel)]="feedback.name" placeholder="Enter your name" required />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email </label>
+          <input type="email" id="email" name="email" [(ngModel)]="feedback.email" placeholder="Enter your email"
+            required />
+        </div>
+
+        <!-- Rating -->
+        <div class="form-group rating-group">
+          <label>Your Rating</label>
+          <div class="stars">
+            <span *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)"
+              [class.active]="feedback.rating >= star">★</span>
+          </div>
+        </div>
+
+        <!-- Comments -->
+        <div class="form-group">
+          <label for="message">Your Feedback</label>
+          <textarea id="message" name="message" [(ngModel)]="feedback.message" placeholder="Write your feedback..."
+            rows="4" required>
+        </textarea>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="submit-btn" [disabled]="!feedbackForm.form.valid">Submit Feedback</button>
+      </form>
+
+      <!-- Success Message -->
+      <div class="success-message" *ngIf="feedbackSubmitted">
+        <h3>🎉 Thank you!</h3>
+        <p>Your feedback has been submitted successfully.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT US -->
+  <section *ngIf="activeMenu === 'about'" style="
+    width:100%;
+    min-height:50vh;
+    overflow-y: auto;
+    padding:30px 20px;
+    font-family:'Segoe UI', sans-serif;
+    color:#1e293b;
+    background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  ">
+    <!-- Header -->
+    <div style="text-align:center; margin-bottom:25px;">
+      <h1 style="font-size:32px; font-weight:700; margin-bottom:10px; color:#0f172a;">
+        About <span style="color:#facc15;">Vehicle Rental System</span>
+      </h1>
+      <p style="font-size:15px; max-width:600px; margin:0 auto; line-height:1.5; color:#334155;">
+        Making vehicle rentals fast, simple, and reliable. Whether for daily commutes, business travel, or weekend
+        trips, we provide seamless booking experiences and excellent service.
+      </p>
+    </div>
+
+    <!-- Features Section -->
+    <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:18px; margin-bottom:25px;">
+      <div
+        style="flex:1 1 220px; max-width:250px; text-align:center; padding:15px; background:rgba(255,255,255,0.8); border-radius:12px; backdrop-filter: blur(5px); box-shadow:0 3px 8px rgba(0,0,0,0.06);">
+        <span style="font-size:28px; display:block; margin-bottom:8px;">🚗</span>
+        <h3 style="font-size:17px; margin-bottom:6px; color:#0f172a;">Wide Vehicles</h3>
+        <p style="font-size:14px; color:#475569;">Cars, SUVs, bikes – variety for every journey.</p>
+      </div>
+      <div
+        style="flex:1 1 220px; max-width:250px; text-align:center; padding:15px; background:rgba(255,255,255,0.8); border-radius:12px; backdrop-filter: blur(5px); box-shadow:0 3px 8px rgba(0,0,0,0.06);">
+        <span style="font-size:28px; display:block; margin-bottom:8px;">💳</span>
+        <h3 style="font-size:17px; margin-bottom:6px; color:#0f172a;">Secure Payment</h3>
+        <p style="font-size:14px; color:#475569;">Safe online payments with instant invoice download.</p>
+      </div>
+      <div
+        style="flex:1 1 220px; max-width:250px; text-align:center; padding:15px; background:rgba(255,255,255,0.8); border-radius:12px; backdrop-filter: blur(5px); box-shadow:0 3px 8px rgba(0,0,0,0.06);">
+        <span style="font-size:28px; display:block; margin-bottom:8px;">📅</span>
+        <h3 style="font-size:17px; margin-bottom:6px; color:#0f172a;">Easy Booking</h3>
+        <p style="font-size:14px; color:#475569;">Manage bookings & cancellations easily anytime.</p>
+      </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div
+      style="max-width:650px; margin:0 auto 20px auto; text-align:center; background:rgba(255,255,255,0.7); padding:20px; border-radius:12px; backdrop-filter: blur(5px); box-shadow:0 3px 6px rgba(0,0,0,0.05);">
+      <h3 style="font-size:18px; margin-bottom:8px; color:#facc15;">Our Mission</h3>
+      <p style="font-size:14px; line-height:1.5; color:#334155;">
+        Provide affordable, secure, and hassle-free vehicle rentals with focus on innovation and customer satisfaction.
+      </p>
+    </div>
+
+    <!-- Vision Section -->
+    <div
+      style="max-width:650px; margin:0 auto 20px auto; text-align:center; background:rgba(255,255,255,0.7); padding:20px; border-radius:12px; backdrop-filter: blur(5px); box-shadow:0 3px 6px rgba(0,0,0,0.05);">
+      <h3 style="font-size:18px; margin-bottom:8px; color:#facc15;">Our Vision</h3>
+      <p style="font-size:14px; line-height:1.5; color:#334155;">
+        Become the most trusted and convenient vehicle rental platform globally, known for transparency and reliability.
+      </p>
+    </div>
+
+    <!-- Call to Action -->
+    <button style="
+      padding:10px 22px;
+      font-size:14px;
+      font-weight:600;
+      color:#1e293b;
+      background:#facc15;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+      transition: all 0.2s ease;
+    " (click)="setActiveMenu('Home')">
+      Book Your Ride
+    </button>
+  </section>
+
+
+
+  <section *ngIf="activeMenu === 'details'" class="about-section">
+    <app-my-booking></app-my-booking>
+  </section>
+
+  <section *ngIf="activeMenu === 'profile'" class="profile-section" style="
+    width:100%;
+    min-height:50vh;
+    overflow-y: auto;
+    padding:30px 20px;
+    font-family:'Segoe UI', sans-serif;
+    color:#1e293b;
+    background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+  ">
+
+    <div class="customer-dashboard" >
+      <app-profile style="width: 50vw"></app-profile>
+    </div>
+
+
+  </section>
+
+
+
+
+
+</div>

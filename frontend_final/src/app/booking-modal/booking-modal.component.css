@@ -1,0 +1,152 @@
+/* Overlay */
+.booking-modal {
+  padding: 10px;
+  position:absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 250ms ease-out;
+}
+
+/* Modal Card */
+.modal-content {
+  background: #ffffff;
+  padding: 24px 26px;
+  border-radius: 14px;
+  width: 380px;
+  max-width: 90%;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  animation: zoomSlide 300ms ease-out;
+}
+
+/* Title */
+.modal-content h3 {
+  margin: 10px 0 18px;
+  text-align: center;
+  font-size: 1.25rem;
+  color: #1976d2;
+  font-weight: normal;
+}
+
+/* Form group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d7dbe0;
+  background: #fff;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-group input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 3px rgba(25,118,210,.12);
+}
+
+/* Fare breakdown rows */
+.fare-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fare-breakdown > div:not(.form-group):not(.total) {
+  display: flex;
+  justify-content: space-between;
+  font-size: .95rem;
+  color: #444;
+}
+
+/* Duration input row horizontal */
+.fare-breakdown .form-group {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fare-breakdown .form-group label {
+  flex: 1;
+  color: #555;
+  font-weight: normal;
+}
+.fare-breakdown .form-group input {
+  flex: 0 0 100px;
+  text-align: right;
+}
+
+/* Separator line */
+.fare-breakdown hr {
+  border: none;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, rgba(25,118,210,0.4), transparent);
+  margin: 6px 0;
+}
+
+/* Total row */
+.fare-breakdown .total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: #1976d2;
+  font-weight: normal;
+}
+
+/* Buttons */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.modal-actions .btn-primary {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  border: none;
+  color: white;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-weight: normal;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.modal-actions .btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(25,118,210,.3);
+}
+
+.modal-actions .btn-outline {
+  border: 1px solid #1976d2;
+  color: #1976d2;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-weight: normal;
+  background: transparent;
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease;
+}
+.modal-actions .btn-outline:hover {
+  background: #1976d2;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+@keyframes zoomSlide {
+  from { transform: translateY(15px) scale(.98); opacity: 0 }
+  to   { transform: translateY(0) scale(1); opacity: 1 }
+}

@@ -1,0 +1,42 @@
+  <div class="booking-modal" *ngIf="show">
+    <div class="modal-content">
+      <h3>Booking: {{ vehicle?.name }}</h3>
+
+      <div class="form-group">
+        <label for="location">Pickup Location:</label>
+        <input
+          id="location"
+          type="text"
+          [(ngModel)]="location"
+          placeholder="Enter pickup location"
+        />
+      </div>
+
+      <div class="fare-breakdown">
+        <div>Base Fare: {{ baseFare | currency:'USD':'symbol':'1.0-1' }}</div>
+
+        <div class="form-group">
+          <label for="duration">Rent Duration (hours):</label>
+          <input
+            id="duration"
+            type="number"
+            min="1"
+            [(ngModel)]="rentalDuration"
+            (change)="onRentalDurationChange()"
+          />
+        </div>
+
+        <div>Duration: {{ rentalDuration }} hour(s)</div>
+        <div>Tax (10%): ${{ tax }}</div>
+        <div>Additional Charges: {{ additionalCharges | currency:'USD':'symbol':'1.0-1'}}</div>
+
+        <hr />
+        <div class="total">Total: ${{ totalFare }}</div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button class="btn btn-primary" (click)="payNow()">Pay Now</button>
+      </div>
+    </div>
+  </div>
