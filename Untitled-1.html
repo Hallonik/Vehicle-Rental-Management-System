@@ -1,0 +1,57 @@
+<h2>Payment Form</h2>
+<p>Complete your purchase by entering your payment details below.</p>
+
+<form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
+  <div class="form-group">
+    <label for="name">Name on Card</label>
+    <input id="name" formControlName="name" placeholder="Jane Smith" required />
+  </div>
+
+  <div class="form-group">
+    <label for="userId">User ID</label>
+    <input type="text" id="userId" formControlName="userId" placeholder="e.g. 1001" />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input id="email" type="email" formControlName="email" placeholder="jane.smith@example.com" required />
+  </div>
+
+  <div class="form-group">
+    <label for="amount">Amount (USD)</label>
+    <input id="amount" type="number" formControlName="amount" placeholder="20.00" min="1" step="0.01" required />
+  </div>
+
+  <div class="form-group">
+    <label for="paymode">Payment Mode</label>
+    <select id="paymode" formControlName="paymentMode" (change)="toggleCardInput()">
+      <option value="">Select Mode</option>
+      <option value="card">Card</option>
+      <option value="upi">UPI</option>
+      <option value="netbanking">Net Banking</option>
+    </select>
+  </div>
+
+  <div class="form-group card-input-group" *ngIf="showCardInput">
+    <label for="card-element">Credit or Debit Card</label>
+    <div id="card-element"></div>
+    <div id="card-errors" role="alert">{{ cardErrors }}</div>
+  </div>
+
+  <div class="form-group">
+    <label for="paymentFor">Payment For</label>
+    <input type="text" id="paymentFor" formControlName="paymentFor" placeholder="Rental Fee" />
+  </div>
+
+  <div class="form-group">
+    <label for="remark">Remark</label>
+    <textarea id="remark" formControlName="remark" placeholder="Optional..."></textarea>
+  </div>
+
+  <button type="submit" [disabled]="loading">{{ submitButtonText }}</button>
+</form>
+
+<div id="success-message" class="success-message" *ngIf="paymentSuccess">
+  <h3>Payment Successful!</h3>
+  <p>Your payment has been processed successfully. You will receive a confirmation email shortly.</p>
+</div>
