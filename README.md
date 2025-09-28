@@ -51,7 +51,6 @@ cd vehicel.rental
 ```
 API available at [http://localhost:8080](http://localhost:8080).
 
-Application is available at (http://vehiclerentalservice.s3-website.ap-south-1.amazonaws.com/).
 
 ### 🛠️ Test
 
@@ -68,12 +67,4 @@ We welcome your ideas and improvements!
 - Create a feature branch
 - Submit a pull request
 
----
 
-## 📄 License
-
-See individual folders for license details.
-
----
-
-> **Made with ❤️ by the VRMS Team**
